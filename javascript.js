@@ -21,9 +21,10 @@ function playAgainHandler() {
         playerPoints = 0;
         aiPoints = 0;
         body.removeChild(playAgain);
+        score.textContent = `Player: 0 to AI: 0`;
+        message.textContent ="";
     });
-    score.textContent = `Player: 0 to AI: 0`;
-    message.textContent ="";
+    
 }
 
 
