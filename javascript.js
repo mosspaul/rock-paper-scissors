@@ -12,6 +12,7 @@ let aiPoints = 0;
 
 button.forEach(button => button.addEventListener("click", handleClick));
 
+// This function resets all of the 
 function playAgainHandler() {
     const playAgain = document.createElement("button");
     body.appendChild(playAgain);
@@ -19,9 +20,10 @@ function playAgainHandler() {
     playAgain.addEventListener("click", function () {
         playerPoints = 0;
         aiPoints = 0;
-
+        body.removeChild(playAgain);
     });
     score.textContent = `Player: 0 to AI: 0`;
+    message.textContent ="";
 }
 
 
