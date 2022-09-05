@@ -1,3 +1,43 @@
+const score = document.querySelector(".score");
+const body = document.querySelector("body");
+const button = document.querySelectorAll("button");
+const message = document.createElement("div");
+message.classList.add("message");
+body.appendChild(message);
+
+
+let playerPoints = 0;
+let aiPoints = 0;
+
+
+button.forEach(button => button.addEventListener("click", handleClick));
+
+function playAgainHandler() {
+    const playAgain = document.createElement("button");
+    body.appendChild(playAgain);
+    playAgain.textContent = "Play Again";
+    playAgain.addEventListener("click", function () {
+        playerPoints = 0;
+        aiPoints = 0;
+
+    });
+    score.textContent = `Player: 0 to AI: 0`;
+}
+
+
+function handleClick(e) {
+    if (playerPoints >= 5) {
+        message.textContent = "You won!";  
+        playAgainHandler();   
+        return;
+
+    } else if (aiPoints >= 5) {
+        message.textContent = "You lost!";
+        playAgainHandler(); 
+        return;
+    }
+    playGame(e.target.textContent)
+}
 /* getComputerChoice
 * randomly return one of three values: rock, paper or scissors;
 */
@@ -11,7 +51,7 @@ function getComputerChoice() {
 */
 
 function playerSelection(input){
-    let playerChoice = prompt(input).toLowerCase();
+    let playerChoice = input.toLowerCase();
     if (playerChoice === "rock" || "paper" || "scissors") {
         return playerChoice;
     } else {
@@ -29,11 +69,11 @@ function playRound(player, ai) {
     }  else {
         switch (ai) {
             case "rock":
-                return (player === "paper") ? `You win, ${player} beats ${ai}!` : `You lose, ${ai} beats ${player}!`;
+                return (player === "paper") ? `Good job, ${player} beats ${ai}!` : `Better luck next time, ${ai} beats ${player}!`;
             case "paper":
-                 return (player === "scissors") ? `You win, ${player} beats ${ai}!` : `You lose, ${ai} beats ${player}!`;
+                 return (player === "scissors") ? `Good job, ${player} beats ${ai}!` : `Better luck next time, ${ai} beats ${player}!`;
             case "scissors":
-                return (player === "rock") ? `You win, ${player} beats ${ai}!` : `You lose, ${ai} beats ${player}!`;
+                return (player === "rock") ? `Good job, ${player} beats ${ai}!` : `Better luck next time, ${ai} beats ${player}!`;
                 
         }
     }
@@ -42,40 +82,17 @@ function playRound(player, ai) {
 /*playGame
 * make a for loop that plays 5 round
 */
-function playGame() {
-    let playerPoints = 0;
-    let aiPoints = 0;
-    for(let i = 0; i < 5; i++) {
-        let result = playRound(playerSelection("Enter rock, paper or scissors"), getComputerChoice());
-        console.log(result);
-        if (result.substring(0, 5) === `You w`) {
-            playerPoints++;
-        } else if (result.substring(0, 5) === `You l`) {
-            aiPoints++;
-        }
-        if (playerPoints >= 3) {
-            break;
-        } else if (aiPoints >= 3) {
-            break;
-        }
-    }
-    if (playerPoints > aiPoints) {
-        console.log(`You won! Great work!`);
-    } else if (aiPoints > playerPoints) {
-        console.log(`You lost.`);
-    } else {
-        console.log(`You tied.`);
-    }
-}
+function playGame(input) {
 
-for(let i = 1; i++;) {
-    if (i - 1 === 1) {
-        playGame();
-    } else {
-        if (prompt(`Would you like to play round ${i - 1}? Type yes or any key.`).toLowerCase() == `yes`) {
-            playGame();
-        } else {
-            break;
-        }
+    let result = playRound(playerSelection(input), getComputerChoice());
+    message.textContent = result;
+    if (result.substring(0, 1) === `G`) {
+        playerPoints++;
+        score.textContent = `Player: ${playerPoints} to AI: ${aiPoints}`;
+    } else if (result.substring(0, 1) === `B`) {
+        aiPoints++;
+        score.textContent = `Player: ${playerPoints} to AI: ${aiPoints}`;
     }
+        
+    
 }
